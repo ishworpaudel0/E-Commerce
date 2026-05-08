@@ -23,7 +23,7 @@ const getSavedUser = () => {
   }
 };
 
-const savedUser = getSavedUser();
+const savedUser = getSavedUser(); // Looks into Local storage if user exist?
 
 const initialState: AuthState & {
   error: string | null;
@@ -141,6 +141,7 @@ const authSlice = createSlice({
           );
         }
       })
+      //IF any call end with UnAuthorized. it clears tokens.
       .addMatcher(
         (action) => action.type.endsWith("/rejected"),
         (state, action: any) => {

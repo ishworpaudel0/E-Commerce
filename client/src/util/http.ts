@@ -12,6 +12,9 @@ const http = axios.create({
   timeout: 10000,
 });
 
+// This run before every request is sent to server.
+// It checks Authorization token in storage.
+// If token exist it injects it into the Authorization header as a Bearer token.
 http.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = getAccessToken();
@@ -31,9 +34,9 @@ http.interceptors.response.use(
     };
 
     if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
+      originalRequest._retry = true; // Prevents from checken the token infinetely.
 
-      try {
+      try { //
         const refreshToken = getRefreshToken();
         const response = await axios.post(
           `${http.defaults.baseURL}/auth/refresh`,
@@ -49,7 +52,7 @@ http.interceptors.response.use(
           originalRequest.headers.Authorization = `Bearer ${accessToken}`;
         }
         return http(originalRequest);
-      } catch (refreshError) {
+      } catch (refreshError) { // If error wipes token and redirest to login.
         clearTokens();
         localStorage.removeItem("user");
         localStorage.removeItem("userId");

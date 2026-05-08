@@ -27,10 +27,12 @@ export const saveRefreshToken = (token: string) => {
   });
 };
 
+// Stores refresh token in cookie.
 export const getRefreshToken = (): string | undefined => {
   return cookies.get("refreshToken");
 };
 
+// Clears token from cookies
 export const clearTokens = () => {
   cookies.remove("accessToken", { path: "/" });
   cookies.remove("refreshToken", { path: "/" });

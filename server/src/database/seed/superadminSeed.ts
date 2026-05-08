@@ -77,8 +77,7 @@ const seed = async () => {
           .filter(
             (perm) =>
               perm.name !== appPermissions.UPDATE_ROLES.name &&
-              perm.name !== appPermissions.CREATE_ROLES.name &&
-              perm.name !== appPermissions.VIEW_ANALYTICS.name,
+              perm.name !== appPermissions.CREATE_ROLES.name,
           )
           .map((perm) => perm._id),
         // Admin gets all permissions except those related to role management and analytics, so we filter out those permissions before mapping to get their _id for the role's permissions array.
